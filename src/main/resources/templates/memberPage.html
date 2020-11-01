@@ -3,19 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>memberPage</title>
+    <link rel="stylesheet" href="/background.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
     <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
-<div th:text="${user.name} + ' ' + ${user.surname}">
-    <img th:src="@{/image(name=${user.profilePicture})}" width="100" th:if="${user.profilePicture != null && user.profilePicture.length() != 0}"/>
+
+<div>
+    <img th:src="@{/image(name=${user.profilePicture})}" width="100"
+         th:if="${user.profilePicture != null && user.profilePicture.length() != 0}"/><br>
+    <h3 th:text="${user.name} + ' ' + ${user.surname}">
+        <h3><br>
 </div><br><br>
+<a href="/user/member"><strong>Projects</strong></a><br>
+<a href="/user/member/log"><strong>Logs</strong></a><br>
+<a th:if="${user != null}" href="/logout"><strong>Logout</strong></a><br><br><br>
 
-
+<div class="table">
 <table border="2px" id="myTable">
     <thead>
-    <tr>
+    <tr class="tr">
 
         <td>Project name</td>
         <td>Date</td>
@@ -38,6 +46,7 @@
     </tbody>
 
 </table>
+</div>
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();

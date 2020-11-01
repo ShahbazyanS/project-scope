@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +15,7 @@ import java.util.Date;
 public class ProjectDto {
 
     private String name;
-    private Date deadline;
+    private LocalDate deadline;
     private String members;
     private double hours;
 }

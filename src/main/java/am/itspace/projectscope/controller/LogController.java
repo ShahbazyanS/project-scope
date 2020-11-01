@@ -7,6 +7,7 @@ import am.itspace.projectscope.security.CurrentUser;
 import am.itspace.projectscope.service.LogService;
 import am.itspace.projectscope.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class LogController {
 
     private final LogService logService;
@@ -27,13 +29,14 @@ public class LogController {
 
     @PostMapping("/user/member/log/add")
     public String addLog(@AuthenticationPrincipal CurrentUser currentUser,@ModelAttribute LogDto logDto){
-        Log log = Log.builder()
+        Log logs = Log.builder()
                 .projects(logDto.getProjects())
                 .date(new Date())
                 .user(currentUser.getUser())
                 .hours(logDto.getHours())
                 .build();
-        logService.save(log);
+        logService.save(logs);
+        log.info("log was aded");
         return "redirect:/user/member/log";
     }
 
@@ -49,6 +52,7 @@ public class LogController {
     @GetMapping("/user/member/log/delete")
     public String delete(@RequestParam("id") int id){
         logService.delete(id);
+        log.info("log was deleted");
         return "redirect:/user/member/log";
     }
 }

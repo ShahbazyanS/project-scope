@@ -8,6 +8,7 @@ import am.itspace.projectscope.security.CurrentUser;
 import am.itspace.projectscope.service.ProjectService;
 import am.itspace.projectscope.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -24,12 +25,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     @Value("${file.upload.dir}")
@@ -48,13 +51,12 @@ public class UserController {
         User user = currentUser.getUser();
         List<User> users = userService.findByUsertype(UserType.TEAM_MEMBER);
         modelMap.addAttribute("users", users);
-        modelMap.addAttribute("user", user);
         return "leaderPage";
     }
 
 
     @PostMapping("/user/register")
-    public String addUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result,
+    public String addUser(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result,
                           ModelMap modelMap, @RequestParam("image")MultipartFile file) throws IOException {
 
         if (result.hasErrors()) {
@@ -64,7 +66,7 @@ public class UserController {
 
         Optional<User> byUsername = userService.getUserByEmail(userDto.getEmail());
         if (byUsername.isPresent()) {
-            return "redirect:/";
+            return "redirect:/?msg=User already exist ";
         }
 
         String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
@@ -79,7 +81,8 @@ public class UserController {
                 .userType(UserType.TEAM_MEMBER)
                 .build();
         userService.save(user);
-        return "redirect:/";
+        log.info("User was registered", new Date());
+        return "redirect:/?msg=User was register";
 
     }
 
@@ -89,7 +92,6 @@ public class UserController {
             return "redirect:/";
         }
         List<Projects> projects = projectService.findByMembers(currentUser.getUser().getName());
-        modelMap.addAttribute("user", currentUser.getUser());
         modelMap.addAttribute("projects", projects);
         return "memberPage";
     }

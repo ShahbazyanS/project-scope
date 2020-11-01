@@ -10,7 +10,6 @@ public interface ProjectRepository extends JpaRepository<Projects,Integer> {
 
     List<Projects> findAllByUser(User user);
 
-    void deleteProjectsById(int id);
 
     List<Projects> findAllByMembers(String members);
 }

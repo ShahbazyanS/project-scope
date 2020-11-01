@@ -1,7 +1,6 @@
 package am.itspace.projectscope.service;
 
 import am.itspace.projectscope.model.Log;
-import am.itspace.projectscope.model.Projects;
 import am.itspace.projectscope.model.User;
 import am.itspace.projectscope.repository.LogRepository;
 import lombok.RequiredArgsConstructor;

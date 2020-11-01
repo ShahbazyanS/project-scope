@@ -5,10 +5,11 @@ import am.itspace.projectscope.model.UserType;
 import am.itspace.projectscope.security.CurrentUser;
 import am.itspace.projectscope.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -19,7 +20,8 @@ public class MainController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String main() {
+    public String main(ModelMap map, @RequestParam(name = "msg", required = false) String msg) {
+        map.addAttribute("msg", msg);
         return "index";
     }
 

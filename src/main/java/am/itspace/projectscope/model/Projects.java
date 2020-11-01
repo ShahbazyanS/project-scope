@@ -21,8 +21,8 @@ public class Projects {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private LocalDate date;
-    private Date deadline;
+    private Date date;
+    private LocalDate deadline;
     private String members;
     private double hours;
     @ManyToOne

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Main Page</title>
@@ -7,6 +7,7 @@
 </head>
 <body>
 <div>
+    <h2 style="color: red" th:text="${msg}" th:if="${msg != null}"></h2><br><br><br>
     <a href="/loginPage"><h2>login</h2></a> | <a href="/registerPage"><h2>register</h2></a>
 </div>
 
